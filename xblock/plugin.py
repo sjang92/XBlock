@@ -11,6 +11,8 @@ import pkg_resources
 
 log = logging.getLogger(__name__)
 
+_plugin_cache = {}
+
 
 class PluginMissingError(Exception):
     """Raised when trying to load a plugin from an entry_point that cannot be found."""
@@ -50,7 +52,6 @@ class Plugin(object):
 
     """
 
-    _plugin_cache = None
     entry_point = None  # Should be overwritten by children classes
 
     # Temporary entry points, for register_temp_plugin.  A list of pairs,
@@ -93,10 +94,7 @@ class Plugin(object):
         if select is None:
             select = default_select
 
-        if cls._plugin_cache is None:
-            cls._plugin_cache = {}
-
-        if identifier not in cls._plugin_cache:
+        if identifier not in _plugin_cache:
             identifier = identifier.lower()
             entry_points = list(pkg_resources.iter_entry_points(cls.entry_point, name=identifier))
             for extra_identifier, extra_entry_point in cls.extra_entry_points:
@@ -110,8 +108,8 @@ class Plugin(object):
                     return default
                 raise
 
-            cls._plugin_cache[identifier] = cls._load_class_entry_point(entry_point)
-        return cls._plugin_cache[identifier]
+            _plugin_cache[identifier] = cls._load_class_entry_point(entry_point)
+        return _plugin_cache[identifier]
 
     @classmethod
     def load_classes(cls):
