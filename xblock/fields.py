@@ -435,6 +435,8 @@ class Field(object):
         This is called during field writes to convert the native python
         type to the value stored in the database
         """
+        if not isinstance(self, JSONField):
+            logging.warn("Deprecated. JSONifiable fields should derive from JSONField")
         return value
 
     def from_json(self, value):

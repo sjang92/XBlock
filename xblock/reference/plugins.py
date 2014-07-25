@@ -29,9 +29,9 @@ def scope_key(instance, xblock):
         raise NotImplementedError()
 
     if instance.scope.block == BlockScope.TYPE:
-        dict['block'] = xblock.scope_ids.usage_id 
+        dict['block'] = xblock.scope_ids.block_type # TODO: Is this correct? Was usage_id
     elif instance.scope.block == BlockScope.USAGE:
-        dict['block'] = xblock.scope_ids.def_id # Seems to be the same as usage? 
+        dict['block'] = xblock.scope_ids.usage_id # TODO: Is this correct? was def_id. # Seems to be the same as usage? 
     elif instance.scope.block == BlockScope.DEFINITION:
         dict['block'] = xblock.scope_ids.def_id
     elif instance.scope.block == BlockScope.ALL:
@@ -44,11 +44,10 @@ def scope_key(instance, xblock):
         if s.isalnum():
             return s
         else:
-            return "_"+str(ord(s))+"_"
+            return "_{}_".format(ord(s))
     encodedkey = "".join(encode(a) for a in basekey)
 
     return encodedkey
-##
 
 
 def public(**kwargs):
@@ -94,6 +93,7 @@ class Service(object):
     figure out where. 
     '''
     def __init__(self, context):
+        # TODO: We need plumbing to set these
         self._runtime = context.get('runtime', None)
         self._xblock = context.get('xblock', None)
         self._user = context.get('user', None)
@@ -127,11 +127,10 @@ class FSService(Service):
 
       https://groups.google.com/forum/#!topic/edx-code/4VadWwqeMNI
     '''
-    def __init__(self, context):
-        super(FSService,self).__init__(context)
 
     @public()
     def load(self, instance, xblock):
+        # TODO: Get xblock from context, once the plumbing is piped through
         return djpyfs.get_filesystem(scope_key(instance, xblock))
     
     def __repr__(self):
