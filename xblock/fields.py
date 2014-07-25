@@ -80,6 +80,9 @@ class BlockScope(object):
 
     @classmethod
     def scopes(cls):
+        ''' Return a list of valid/understood class scopes. 
+        Why do we need this? I believe it is not used anywhere. 
+        '''
         return [cls.USAGE, cls.DEFINITION, cls.TYPE, cls.ALL]
 
 
@@ -110,6 +113,9 @@ class UserScope(object):
 
     @classmethod
     def scopes(cls):
+        ''' Return a list of valid/understood class scopes. 
+        Why do we need this? I believe it is not used anywhere. 
+        '''
         return [cls.NONE, cls.ONE, cls.ALL]
 
 
@@ -674,7 +680,7 @@ class Any(JSONField):
 
     All methods are inherited directly from `Field`.
 
-	THIS SHOULD BE DEPRECATED. THIS SHOULD EITHER BE ANY JSON DATA, OR IT MAKES NO SENSE
+    THIS SHOULD BE DEPRECATED. THIS SHOULD EITHER BE ANY JSON DATA, OR IT MAKES NO SENSE
     """
     pass
 

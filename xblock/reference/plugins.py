@@ -5,14 +5,17 @@ from djpyfs import djpyfs
 from xblock.fields import Field, NO_CACHE_VALUE
 from xblock.fields import Scope, UserScope, BlockScope
 
-#  Finished services (this space intentionally left blank)
-
-
-
-
-
-
-
+#            Finished services
+#    (this space intentionally left blank)
+#       I meant
+#        to leave
+#          a big
+#            empty block here
+#  but pep8
+#    complained. And
+#      the author doesn't
+#       like
+#         ignores like pylint
 #  edX-internal prototype services
 
 
@@ -29,9 +32,9 @@ def scope_key(instance, xblock):
         raise NotImplementedError()
 
     if instance.scope.block == BlockScope.TYPE:
-        dict['block'] = xblock.scope_ids.block_type # TODO: Is this correct? Was usage_id
+        dict['block'] = xblock.scope_ids.block_type   # TODO: Is this correct? Was usage_id
     elif instance.scope.block == BlockScope.USAGE:
-        dict['block'] = xblock.scope_ids.usage_id # TODO: Is this correct? was def_id. # Seems to be the same as usage?
+        dict['block'] = xblock.scope_ids.usage_id     # TODO: Is this correct? was def_id. # Seems to be the same as usage?
     elif instance.scope.block == BlockScope.DEFINITION:
         dict['block'] = xblock.scope_ids.def_id
     elif instance.scope.block == BlockScope.ALL:
@@ -40,6 +43,7 @@ def scope_key(instance, xblock):
         raise NotImplementedError()
 
     basekey = json.dumps(dict, sort_keys=True, separators=(',', ':'))
+
     def encode(s):
         if s.isalnum():
             return s
@@ -68,6 +72,7 @@ def public(**kwargs): # pylint disable=unused-argument
       in https://github.com/edx/insights to understand how this will
       be used.
     '''
+
     def wrapper(f):
         return f
 
