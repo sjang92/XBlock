@@ -1,9 +1,9 @@
 ''' This is a set of reference implementations for XBlock plugins
-(XBlocks, Fields, and Services). 
+(XBlocks, Fields, and Services).
 
-The README file in this directory contains much more information. 
+The README file in this directory contains much more information.
 
-Much of this still needs to be organized. 
+Much of this still needs to be organized.
 '''
 
 
@@ -58,7 +58,7 @@ def scope_key(instance, xblock):
 
     def encode(char):
         ''' Replace all non-alphanumeric characters with _n_ where n
-        is their ASCII code. 
+        is their ASCII code.
         '''
         if char.isalnum():
             return char
@@ -159,7 +159,7 @@ class FSService(Service):
         '''
         # TODO: Get xblock from context, once the plumbing is piped through
         return djpyfs.get_filesystem(scope_key(instance, xblock))
-   
+ 
     def __repr__(self):
         return "File system object"
 
