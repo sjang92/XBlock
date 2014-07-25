@@ -12,7 +12,7 @@ import json
 from djpyfs import djpyfs
 
 from xblock.fields import Field, NO_CACHE_VALUE
-from xblock.fields import Scope, UserScope, BlockScope
+from xblock.fields import UserScope, BlockScope
 
 #            Finished services
 #    (this space intentionally left blank)
@@ -88,8 +88,8 @@ def public(**kwargs): # pylint disable=unused-argument
       be used.
     '''
 
-    def wrapper(f):
-        return f
+    def wrapper(function):
+        return function
 
     return wrapper
 
@@ -119,9 +119,13 @@ class Service(object):
         self._user = kwargs.get('user', None)
 
     def xblock(self):
+        ''' Accessor for the xblock calling the service. Returns None if unknown
+        '''
         return self._xblock
 
     def runtime(self):
+        ''' Accessor for the runtime object. Returns None if unknown
+        '''
         return self._runtime
 
 
@@ -150,6 +154,9 @@ class FSService(Service):
 
     @public()
     def load(self, instance, xblock):
+        ''' Get the filesystem for the field specified in 'instance' and the xblock in 'xblock'
+        It is locally scoped.
+        '''
         # TODO: Get xblock from context, once the plumbing is piped through
         return djpyfs.get_filesystem(scope_key(instance, xblock))
    

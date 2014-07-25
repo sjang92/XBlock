@@ -80,8 +80,8 @@ class BlockScope(object):
 
     @classmethod
     def scopes(cls):
-        ''' Return a list of valid/understood class scopes. 
-        Why do we need this? I believe it is not used anywhere. 
+        ''' Return a list of valid/understood class scopes.
+        Why do we need this? I believe it is not used anywhere.
         '''
         return [cls.USAGE, cls.DEFINITION, cls.TYPE, cls.ALL]
 
@@ -113,8 +113,8 @@ class UserScope(object):
 
     @classmethod
     def scopes(cls):
-        ''' Return a list of valid/understood class scopes. 
-        Why do we need this? I believe it is not used anywhere. 
+        ''' Return a list of valid/understood class scopes.
+        Why do we need this? I believe it is not used anywhere.
         '''
         return [cls.NONE, cls.ONE, cls.ALL]
 
