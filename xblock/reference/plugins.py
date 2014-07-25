@@ -92,11 +92,11 @@ class Service(object):
     This superclass should go somewhere else. This is an interrim location until we
     figure out where. 
     '''
-    def __init__(self, context):
+    def __init__(self, **kwargs):
         # TODO: We need plumbing to set these
-        self._runtime = context.get('runtime', None)
-        self._xblock = context.get('xblock', None)
-        self._user = context.get('user', None)
+        self._runtime = kwargs.get('runtime', None)
+        self._xblock = kwargs.get('xblock', None)
+        self._user = kwargs.get('user', None)
 
     def xblock(self):
         return self._xblock
