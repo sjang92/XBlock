@@ -6,12 +6,12 @@ for each scope.
 
 """
 
-import datetime
-import copy
 from collections import namedtuple
-import pytz
+import copy
+import datetime
 import dateutil.parser
-
+import logging
+import pytz
 
 # __all__ controls what classes end up in the docs, and in what order.
 __all__ = [
@@ -38,12 +38,18 @@ class Sentinel(object):
 
     @property
     def attr_name(self):
+        """ TODO: Look into namespace collisions. block.name_space == block_name.space
+        """
         return self.name.lower().replace('.', '_')
 
     def __eq__(self, other):
+        """ Equality is based on being of the same class, and having same name
+        """
         return isinstance(other, Sentinel) and self.name == other.name
 
     def __hash__(self):
+        ''' Use a hash of the name of the sentinel
+        '''
         return hash(self.name)
 
 
@@ -488,7 +494,7 @@ class Field(object):
 
 
 class JSONField(Field):
-    ''' Field type which has a convenient JSON representation. 
+    ''' Field type which has a convenient JSON representation.
     '''
     jsonifiable = True
 

@@ -6,7 +6,6 @@ from xblock.fields import Field, NO_CACHE_VALUE
 from xblock.fields import Scope, UserScope, BlockScope
 
 #  Finished services (this space intentionally left blank)
-# pylint: disable=E303
 
 
 
@@ -40,7 +39,7 @@ def scope_key(instance, xblock):
     else:
         raise NotImplementedError()
 
-    basekey = json.dumps(dict, sort_keys=True, separators=(',',':'))
+    basekey = json.dumps(dict, sort_keys=True, separators=(',', ':'))
     def encode(s):
         if s.isalnum():
             return s
@@ -51,7 +50,7 @@ def scope_key(instance, xblock):
     return encodedkey
 
 
-def public(**kwargs):
+def public(**kwargs): # pylint disable=unused-argument
     ''' Mark a function as public. In the future, this will inform the XBlocks services
     framework to make the function remotable. For now, this is a placeholder.
 
