@@ -1,3 +1,12 @@
+''' This is a set of reference implementations for XBlock plugins
+(XBlocks, Fields, and Services). 
+
+The README file in this directory contains much more information. 
+
+Much of this still needs to be organized. 
+'''
+
+
 import json
 
 from djpyfs import djpyfs
@@ -23,33 +32,39 @@ from xblock.fields import Scope, UserScope, BlockScope
 #  TODO: Clean up how key is generated
 #  TODO: Include field name, if not there yet?
 def scope_key(instance, xblock):
-    dict = {}
+    ''' Generate a unique key for a scope that can be used as a
+    filename, in a URL, or in a KVS.
+    '''
+    scope_key_dict = {}
     if instance.scope.user == UserScope.NONE or instance.scope.user == UserScope.ALL:
         pass
     elif instance.scope.user == UserScope.ONE:
-        dict['user'] = xblock.scope_ids.user_id
+        scope_key_dict['user'] = xblock.scope_ids.user_id
     else:
         raise NotImplementedError()
 
     if instance.scope.block == BlockScope.TYPE:
-        dict['block'] = xblock.scope_ids.block_type   # TODO: Is this correct? Was usage_id
+        scope_key_dict['block'] = xblock.scope_ids.block_type   # TODO: Is this correct? Was usage_id
     elif instance.scope.block == BlockScope.USAGE:
-        dict['block'] = xblock.scope_ids.usage_id     # TODO: Is this correct? was def_id. # Seems to be the same as usage?
+        scope_key_dict['block'] = xblock.scope_ids.usage_id     # TODO: Is this correct? was def_id. # Seems to be the same as usage?
     elif instance.scope.block == BlockScope.DEFINITION:
-        dict['block'] = xblock.scope_ids.def_id
+        scope_key_dict['block'] = xblock.scope_ids.def_id
     elif instance.scope.block == BlockScope.ALL:
         pass
     else:
         raise NotImplementedError()
 
-    basekey = json.dumps(dict, sort_keys=True, separators=(',', ':'))
+    basekey = json.dumps(scope_key_dict, sort_keys=True, separators=(',', ':'))
 
-    def encode(s):
-        if s.isalnum():
-            return s
+    def encode(char):
+        ''' Replace all non-alphanumeric characters with _n_ where n
+        is their ASCII code. 
+        '''
+        if char.isalnum():
+            return char
         else:
-            return "_{}_".format(ord(s))
-    encodedkey = "".join(encode(a) for a in basekey)
+            return "_{}_".format(ord(char))
+    encodedkey = "".join(encode(char) for char in basekey)
 
     return encodedkey
 
